@@ -21,7 +21,8 @@ val beans = beans {
 //            val mess = Message()
 //            mess.text = "repo text"
 //            val t = Tag(name = "repo tag")
-//            mess.tag = t
+//            t.mess = mess
+//            mess.tags.add(t)
 //
 //            repo.save(mess)
 //        }
