@@ -30,8 +30,9 @@ class Message {
     var id: Long? = null
 
     @NotNull
-    @Size(min = 5, max = 200, message
-    = "About Me must be between 10 and 200 characterssss")
+    @Size(
+        min = 5, max = 200, message = "About Me must be between 10 and 200 characterssss"
+    )
     var text: String? = null
 
     @ElementCollection
@@ -51,8 +52,7 @@ data class MessageDTO(val text: String, val tags: List<String>) {
 }
 
 @Embeddable
-class Tag(var name: String? = null) {
-}
+class Tag(var name: String? = null) {}
 
 interface MessageRepo : CrudRepository<Message, Long> {}
 
@@ -67,6 +67,17 @@ class Controller {
         return repo.findAll()
     }
 
+//    POST http://localhost:8080/
+//    Content-Type: application/json
+//
+//    {
+//        "text": "2",
+//        "tags": [
+//        "tag1",
+//        "tag2"
+//        ]
+//    }
+    
     @PostMapping
     @ResponseBody
     fun post(@RequestBody messageDTO: MessageDTO): Message {
