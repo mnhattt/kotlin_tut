@@ -1,5 +1,6 @@
 package com.example.kotlin_tut
 
+import org.hibernate.annotations.GenericGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.http.HttpStatus
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 import javax.persistence.AttributeOverride
+import javax.persistence.CollectionTable
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Embeddable
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -30,15 +34,17 @@ class Message {
     = "About Me must be between 10 and 200 characterssss")
     var text: String? = null
 
-    @AttributeOverride(name = "name", column = Column(name = "tag_name"))
-    var tag: Tag? = null
+    @ElementCollection
+    @CollectionTable(name = "TAG")
+//    @GenericGenerator(name = "sequence_gen", strategy = "sequence")
+    var tags: List<Tag>? = null
 }
 
-data class MessageDTO(val text: String, val tag: String) {
+data class MessageDTO(val text: String, val tags: List<String>) {
     fun toEntity(): Message {
         val message = Message()
-        message.text = text
-        message.tag = Tag(tag)
+        val tags = tags.map { Tag(it) }
+        message.tags = tags
 
         return message
     }
