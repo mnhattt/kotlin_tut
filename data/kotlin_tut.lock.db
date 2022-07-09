@@ -1,0 +1,6 @@
+#FileLock
+#Sat Jul 09 12:38:42 ICT 2022
+server=192.168.2.251\:63379
+hostName=nhats-mbp
+method=file
+id=181e177a0073e1c4c6861e099b70a893288e77e712c
